@@ -7,6 +7,13 @@ namespace Mockbuster.Controllers
 {
     public class MoviesController : Controller
     {
+        public ViewResult Index()
+        {
+            var movies = GetMovies();
+
+            return View(movies);
+        }
+
         // GET: Movies/Random
         public ActionResult Random()
         {
@@ -17,10 +24,10 @@ namespace Mockbuster.Controllers
                 new Customer { Name = "Billy"}
             };
 
-            var viewModel = new RandomMovieViewModel
+            var viewModel = new RandomMovieViewModel()
             {
                 Movie = movie,
-                Customers = customers
+                Customers = customers,
             };
 
             return View(viewModel);
@@ -31,21 +38,20 @@ namespace Mockbuster.Controllers
             return Content("id=" + id);
         }
 
-        public ActionResult Index(int? pageIndex, string sortBy)
-        {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
-
-            if (string.IsNullOrWhiteSpace(sortBy))
-                sortBy = "Name";
-
-            return Content(string.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
-        }
-
         [Route("movies/released/{year}/{month:regex(\\d{4}):range(1,12)}")]
         public ActionResult ByReleaseDate(int year, int month)
         {
             return Content(year + "/" + month);
+        }
+
+        private List<Movie> GetMovies()
+        {
+            return new List<Movie>
+            {
+                new Movie {Id = 1, Name = "Shrek" },
+                new Movie {Id = 2, Name = "Wall-e" },
+                new Movie {Id = 3, Name = "Pulp-Fiction" }
+            };
         }
     }
 }
