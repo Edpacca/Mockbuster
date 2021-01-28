@@ -1,0 +1,37 @@
+﻿@model Mockbuster.ViewModels.TestCustomerViewModel
+
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+
+
+@if (Model.Customers.Count == 0)
+{
+    <text>We don't have any customers.. yet!</text>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Id</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var customer in Model.Customers)
+        {
+            <tr>
+                <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null)</td>
+                <td>@customer.Id</td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+}
