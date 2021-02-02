@@ -1,0 +1,32 @@
+﻿@model Mockbuster.ViewModels.IndexMovieViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Movies</h2>
+
+@if (Model.Movies.Count() == 0)
+{
+    <text>No movies exist yet</text>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td><b>Title</b></td>
+                <td><b>ID</b></td>
+            </tr>
+        </thead>
+
+        @foreach (var movie in Model.Movies)
+        {
+            <tr>
+                <td>@movie.Name</td>
+                <td>@movie.Id</td>
+            </tr>
+        }
+    </table>
+}
+

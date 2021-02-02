@@ -1,5 +1,7 @@
 ﻿using Mockbuster.Models;
+using Mockbuster.ViewModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,8 +15,19 @@ namespace Mockbuster.Controllers
         public ActionResult Random()
         {
             var movie = new Movie() { Name = "Shrek" };
+            var customers = new List<Customer>
+            {
+                new Customer {Name = "bob", Id = 1 },
+                new Customer {Name = "bill", Id = 2 }
+            };
 
-            return View(movie);
+            var viewModel = new RandomMovieViewModel
+            {
+                Movie = movie,
+                Customers = customers,
+            };
+
+            return View(viewModel);
         }
 
         public ActionResult Edit(int id)
@@ -23,14 +36,16 @@ namespace Mockbuster.Controllers
         }
 
         // Get: Movies
-        public ActionResult Index(int? pageIndex, string sortBy)
+        public ActionResult Index(int? pageIndex)
         {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
-            if (string.IsNullOrWhiteSpace(sortBy))
-                sortBy = "Name";
+            var movies = GetMovies();
 
-            return Content(string.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
+            var viewModel = new IndexMovieViewModel
+            {
+                Movies = movies,
+            };
+
+            return View(viewModel);
         }
 
         // Get: Movies/Released
@@ -39,6 +54,16 @@ namespace Mockbuster.Controllers
         public ActionResult ByReleaseDate(int year, int month)
         {
             return Content(year + "/" + month);
+        }
+
+        private IEnumerable<Movie> GetMovies()
+        {
+            return new List<Movie>()
+            {
+                new Movie() { Name = "Pulp Fiction", Id = 1 },
+                new Movie() { Name = "Wall-e", Id = 2 },
+                new Movie() { Name = "The Incredibles", Id = 3 }
+            };
         }
     }
 }
