@@ -11,23 +11,16 @@ namespace Mockbuster.Controllers
 {
     public class MoviesController : Controller
     {
-        // GET: Movies/Random
-        public ActionResult Random()
+        ApplicationDbContext _context;
+
+        public MoviesController()
         {
-            var movie = new Movie() { Name = "Shrek" };
-            var customers = new List<Customer>
-            {
-                new Customer {Name = "bob", Id = 1 },
-                new Customer {Name = "bill", Id = 2 }
-            };
+            _context = new ApplicationDbContext();
+        }
 
-            var viewModel = new RandomMovieViewModel
-            {
-                Movie = movie,
-                Customers = customers,
-            };
-
-            return View(viewModel);
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
         }
 
         public ActionResult Edit(int id)
@@ -36,9 +29,9 @@ namespace Mockbuster.Controllers
         }
 
         // Get: Movies
-        public ActionResult Index(int? pageIndex)
+        public ActionResult Index()
         {
-            var movies = GetMovies();
+            var movies = _context.Movies;
 
             var viewModel = new IndexMovieViewModel
             {
@@ -46,6 +39,13 @@ namespace Mockbuster.Controllers
             };
 
             return View(viewModel);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+
+            return View(movie);
         }
 
         // Get: Movies/Released
@@ -56,14 +56,14 @@ namespace Mockbuster.Controllers
             return Content(year + "/" + month);
         }
 
-        private IEnumerable<Movie> GetMovies()
-        {
-            return new List<Movie>()
-            {
-                new Movie() { Name = "Pulp Fiction", Id = 1 },
-                new Movie() { Name = "Wall-e", Id = 2 },
-                new Movie() { Name = "The Incredibles", Id = 3 }
-            };
-        }
+        //private IEnumerable<Movie> GetMovies()
+        //{
+        //    return new List<Movie>()
+        //    {
+        //        new Movie() { Name = "Pulp Fiction", Id = 1 },
+        //        new Movie() { Name = "Wall-e", Id = 2 },
+        //        new Movie() { Name = "The Incredibles", Id = 3 }
+        //    };
+        //}
     }
 }
