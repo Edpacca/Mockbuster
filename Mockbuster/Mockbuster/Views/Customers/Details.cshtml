@@ -6,3 +6,11 @@
 }
 
 <h2>@Model.Name</h2>
+
+<ul>
+    <li><b>Membership:</b> @Model.MembershipType.Name</li>
+    @if (Model.BirthDate != null)
+    {
+        <li><b>Date of Birth:</b> @Model.BirthDate.Value.ToString("d")</li>
+    }
+</ul>
