@@ -1,7 +1,7 @@
 ﻿@model Mockbuster.ViewModels.IndexCustomerViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Customers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,7 +16,9 @@ else
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <td><b>Name</b></td>
+                <th>Name</th>
+                <th>Discount Rate</th>
+
             </tr>
         </thead>
 
@@ -24,6 +26,7 @@ else
         {
             <tr>
                 <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null )</td>
+                <td>@customer.MembershipType.DiscountRate%</td>
             </tr>
         }
     </table>
