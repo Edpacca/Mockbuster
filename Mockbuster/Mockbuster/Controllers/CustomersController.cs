@@ -37,6 +37,18 @@ namespace Mockbuster.Controllers
         [HttpPost]
         public ActionResult Save(Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+
+                return View("CustomerForm", viewModel);
+            }
+
+
             if (customer.Id == 0)
                 _context.Customers.Add(customer);
             else
@@ -56,8 +68,6 @@ namespace Mockbuster.Controllers
 
                 // Alternatively make a new class which only has the updateable properties to restrict which properies can be updated
             }
-
-            
             
             _context.SaveChanges();
 
