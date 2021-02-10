@@ -8,19 +8,19 @@ namespace Mockbuster.Models
 {
     public class Movie
     {
-        [Requried]
+        [Required]
         public int Id { get; set; }
-        [Requried]
+        [Required]
         [StringLength(255)]
         public string Name { get; set; }
-        [Requried]
+        [Required]
         [StringLength(124)]
         public string Genre { get; set; }
-        [Requried]
+        [Required]
         public DateTime ReleaseDate { get; set; }
-        [Requried]
+        [Required]
         public DateTime DateAdded { get; set; }
-        [Requried]
+        [Required]
         public byte NumberInStock { get; set; }
     }
 }
