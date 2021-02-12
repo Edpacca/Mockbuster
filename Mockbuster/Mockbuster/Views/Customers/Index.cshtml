@@ -7,6 +7,12 @@
 
 <h2>Customers</h2>
 
+
+@Html.ActionLink("Add Customer", "New", "Customers", new { id = 0 }, new { @class = "btn btn-primary" })
+
+<br />
+<br />
+
 @if (Model.Customers.Count() == 0)
 {
     <text>No customers in the database yet.</text>
@@ -24,7 +30,7 @@ else
         @foreach (var customer in Model.Customers)
         {
             <tr>
-                <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null )</td>
+                <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null)</td>
                 <td>@customer.MembershipType.Name</td>
             </tr>
         }
