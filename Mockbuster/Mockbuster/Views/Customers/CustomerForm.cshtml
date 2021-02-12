@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit Customer</h2>
+<h2>@Model.Title</h2>
 
 @* using block puts end tag on disposable object form*@
 @using (Html.BeginForm("Save", "Customers"))
