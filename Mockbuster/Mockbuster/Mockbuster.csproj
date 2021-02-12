@@ -268,6 +268,14 @@
     <Compile Include="Migrations\202102121756435_RemoveGenreFromIndexMovieViewModel1.Designer.cs">
       <DependentUpon>202102121756435_RemoveGenreFromIndexMovieViewModel1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102121838050_ChangedCustomerDataValidation.cs" />
+    <Compile Include="Migrations\202102121838050_ChangedCustomerDataValidation.Designer.cs">
+      <DependentUpon>202102121838050_ChangedCustomerDataValidation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102121907393_FixingPropertyRequirementsInMovieModel.cs" />
+    <Compile Include="Migrations\202102121907393_FixingPropertyRequirementsInMovieModel.Designer.cs">
+      <DependentUpon>202102121907393_FixingPropertyRequirementsInMovieModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -275,6 +283,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
+    <Compile Include="Models\Min18YearsIfAMember.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -419,6 +428,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102121756435_RemoveGenreFromIndexMovieViewModel1.resx">
       <DependentUpon>202102121756435_RemoveGenreFromIndexMovieViewModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102121838050_ChangedCustomerDataValidation.resx">
+      <DependentUpon>202102121838050_ChangedCustomerDataValidation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102121907393_FixingPropertyRequirementsInMovieModel.resx">
+      <DependentUpon>202102121907393_FixingPropertyRequirementsInMovieModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
