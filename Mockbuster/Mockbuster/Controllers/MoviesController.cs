@@ -7,6 +7,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace Mockbuster.Controllers
 {
@@ -27,7 +28,7 @@ namespace Mockbuster.Controllers
         // Get: Movies
         public ActionResult Index()
         {
-            var movies = _context.Movies;
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
 
             var viewModel = new IndexMovieViewModel
             {
@@ -79,7 +80,7 @@ namespace Mockbuster.Controllers
                 movieInDb.ReleaseDate = movie.ReleaseDate;
                 movieInDb.NumberInStock = movie.NumberInStock;
             }
-            
+
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Movies");
