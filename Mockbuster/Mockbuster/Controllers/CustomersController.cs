@@ -27,6 +27,7 @@ namespace Mockbuster.Controllers
             var membershipTypes = _context.MembershipTypes.ToList();
             var viewModel = new CustomerFormViewModel
             {
+                Customer = new Customer(),
                 MembershipTypes = membershipTypes
             };
 
@@ -35,6 +36,7 @@ namespace Mockbuster.Controllers
 
         // If actions modify data they should NEVER be accessable by HttpGet
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
             if (!ModelState.IsValid)
