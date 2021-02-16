@@ -28,14 +28,15 @@ namespace Mockbuster.Controllers
         // Get: Movies
         public ActionResult Index()
         {
-            var movies = _context.Movies.Include(m => m.Genre).ToList();
+            return View();
+            //var movies = _context.Movies.Include(m => m.Genre).ToList();
 
-            var viewModel = new IndexMovieViewModel
-            {
-                Movies = movies,
-            };
+            //var viewModel = new IndexMovieViewModel
+            //{
+            //    Movies = movies,
+            //};
 
-            return View(viewModel);
+            //return View(viewModel);
         }
 
         public ActionResult New()
