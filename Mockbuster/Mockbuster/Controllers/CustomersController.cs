@@ -79,14 +79,15 @@ namespace Mockbuster.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
+            return View();
+            //var customers = _context.Customers.Include(c => c.MembershipType).ToList();
 
-            var viewModel = new IndexCustomerViewModel
-            {
-                Customers = customers
-            };
+            //var viewModel = new IndexCustomerViewModel
+            //{
+            //    Customers = customers
+            //};
 
-            return View(viewModel);
+            //return View(viewModel);
         }
 
         public ActionResult Edit(int id)
