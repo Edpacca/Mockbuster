@@ -6,6 +6,7 @@ using System.Web.Http;
 using Mockbuster.Dtos;
 using AutoMapper;
 using System;
+using System.Data.Entity;
 
 namespace Mockbuster.Controllers.Api
 {
@@ -22,23 +23,21 @@ namespace Mockbuster.Controllers.Api
         // GET /api/customers
         public IEnumerable<CustomerDto> GetCustomers()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            return _context.Customers
+                .Include(c => c.MembershipType)
+                .ToList()
+                .Select(Mapper.Map<Customer, CustomerDto>);
         }
 
         // GET /api/customers/1
-        public IHttpActionResult GetCustomer(int id)
+        public CustomerDto GetCustomer(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if (customer == null)
-                return NotFound();
+                throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return OK(Mapper.Map<Customer, CustomerDto>(customer));
-        }
-
-        private IHttpActionResult OK(CustomerDto customerDto)
-        {
-            throw new NotImplementedException();
+            return (Mapper.Map<Customer, CustomerDto>(customer));
         }
 
         // POST /api/customer 
@@ -69,7 +68,6 @@ namespace Mockbuster.Controllers.Api
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
             Mapper.Map(customerDto, customerInDb);
-
             _context.SaveChanges();
         }
 
