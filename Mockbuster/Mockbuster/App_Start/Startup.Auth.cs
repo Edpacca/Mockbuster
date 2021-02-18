@@ -54,9 +54,9 @@ namespace Mockbuster
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "750817649133675",
+               appSecret: "6a15eab4bbb62f134862de59c7a3db87");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
