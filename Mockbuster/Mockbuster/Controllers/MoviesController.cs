@@ -28,7 +28,11 @@ namespace Mockbuster.Controllers
         // Get: Movies
         public ActionResult Index()
         {
-            return View();
+            if (User.IsInRole(RoleName.CanManageMovies))
+               return View("List");
+
+            return View("ReadOnlyList");
+
             //var movies = _context.Movies.Include(m => m.Genre).ToList();
 
             //var viewModel = new IndexMovieViewModel
@@ -39,6 +43,7 @@ namespace Mockbuster.Controllers
             //return View(viewModel);
         }
 
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
             var genres = _context.Genres.ToList();
@@ -50,6 +55,7 @@ namespace Mockbuster.Controllers
             return View("MovieForm", viewModel);
         }
 
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
@@ -67,6 +73,7 @@ namespace Mockbuster.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Save(Movie movie)
         {
             if (!ModelState.IsValid)
