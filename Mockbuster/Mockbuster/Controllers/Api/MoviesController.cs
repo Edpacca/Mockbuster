@@ -11,6 +11,7 @@ using System.Web.Http;
 
 namespace Mockbuster.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanManageMovies)]
     public class MoviesController : ApiController 
     {
         ApplicationDbContext _context;

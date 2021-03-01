@@ -12,7 +12,6 @@ namespace Mockbuster.Controllers.Api
 {
     public class CustomersController : ApiController
     {
-
         private ApplicationDbContext _context;
 
         public CustomersController()
