@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Runtime.Caching;
 
 namespace Mockbuster.Controllers
 {
@@ -79,7 +80,15 @@ namespace Mockbuster.Controllers
         // GET: Customers
         public ActionResult Index()
         {
+            if (MemoryCache.Default["Genres"] == null)
+            {
+                MemoryCache.Default["Genres"] = _context.Genres.ToList();
+            }
+
+            var genres = MemoryCache.Default["Genres"] as IEnumerable<Genre>;
+
             return View();
+  
             //var customers = _context.Customers.Include(c => c.MembershipType).ToList();
 
             //var viewModel = new IndexCustomerViewModel
