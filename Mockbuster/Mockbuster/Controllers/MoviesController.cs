@@ -87,7 +87,11 @@ namespace Mockbuster.Controllers
             }
 
             if (movie.Id == 0)
+            {
+                movie.NumberAvailable = movie.NumberInStock;
                 _context.Movies.Add(movie);
+            }
+
             else
             {
                 var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
@@ -96,6 +100,7 @@ namespace Mockbuster.Controllers
                 movieInDb.GenreId = movie.GenreId;
                 movieInDb.ReleaseDate = movie.ReleaseDate;
                 movieInDb.NumberInStock = movie.NumberInStock;
+                movieInDb.NumberAvailable = movie.NumberAvailable;
             }
 
             _context.SaveChanges();
