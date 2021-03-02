@@ -20,9 +20,9 @@ namespace Mockbuster.ViewModels
             Name = movie.Name;
             ReleaseDate = movie.ReleaseDate;
             NumberInStock = movie.NumberInStock;
+            NumberAvailable = movie.NumberAvailable;
             GenreId = movie.GenreId;
         }
-
 
         [Required]
         public int? Id { get; set; }
@@ -43,6 +43,10 @@ namespace Mockbuster.ViewModels
         [Display(Name = "Number In Stock")]
         [Range(1, 20)]
         public byte? NumberInStock { get; set; }
+
+        [Display(Name = "Number Available")]
+        [Range(1, 20)]
+        public byte? NumberAvailable { get; set; }
 
         public IEnumerable<Genre> Genres { get; set; }
 

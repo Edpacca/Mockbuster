@@ -30,6 +30,15 @@
         @Html.ValidationMessageFor(m => m.NumberInStock)
     </div>
 
+    if (Model.Title == "Edit Movie")
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.NumberAvailable)
+            @Html.TextBoxFor(m => m.NumberAvailable, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.NumberAvailable)
+        </div>
+    }
+
     @Html.HiddenFor(m => m.Id)
     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>

@@ -26,5 +26,8 @@ namespace Mockbuster.Dtos
         [Required]
         [Range(1, 20)]
         public byte NumberInStock { get; set; }
+
+        [Range(1, 20)]
+        public byte? NumberAvailable { get; set; }
     }
 }
