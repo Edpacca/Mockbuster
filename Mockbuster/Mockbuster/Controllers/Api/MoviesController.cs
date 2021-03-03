@@ -11,7 +11,6 @@ using System.Web.Http;
 
 namespace Mockbuster.Controllers.Api
 {
-    [Authorize(Roles = RoleName.CanManageMovies)]
     public class MoviesController : ApiController 
     {
         ApplicationDbContext _context;
@@ -21,35 +20,59 @@ namespace Mockbuster.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
-        // GET api/movies
-        public IEnumerable<MovieDto> GetMovies()
+        //// GET api/movies
+        //public IEnumerable<MovieDto> GetMovies()
+        //{
+        //    return _context.Movies
+        //        .Include(m => m.Genre)
+        //        .ToList()
+        //        .Select(Mapper.Map<Movie, MovieDto>);
+        //}
+
+        //public IHttpActionResult GetMovies()
+        //{
+        //    var moviesDto = _context.Movies
+        //        .Include(m => m.Genre)
+        //        .ToList()
+        //        .Select(Mapper.Map<Movie, MovieDto>);
+
+        //    return Ok(moviesDto);
+        //}
+
+        public IEnumerable<MovieDto> GetMovies(string query = null)
         {
-            return _context.Movies
+            var moviesQuery = _context.Movies
                 .Include(m => m.Genre)
+                .Where(m => m.NumberAvailable > 0);
+
+            if (!String.IsNullOrWhiteSpace(query))
+                moviesQuery = moviesQuery.Where(m => m.Name.Contains(query));
+
+            return moviesQuery
                 .ToList()
                 .Select(Mapper.Map<Movie, MovieDto>);
         }
 
         // GET api/movies/1
-        public MovieDto GetMovie(int id)
+        public IHttpActionResult GetMovie(int id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
 
             if (movie == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
-            return Mapper.Map<Movie, MovieDto>(movie);
+            return Ok(Mapper.Map<Movie, MovieDto>(movie));
         }
 
         // POST api/movie
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public IHttpActionResult CreateMovie(MovieDto movieDto)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest("One or more form entries are invalid");
 
             var movie = Mapper.Map<MovieDto, Movie>(movieDto);
-            movie.NumberAvailable = movie.NumberInStock;
             _context.Movies.Add(movie);
             _context.SaveChanges();
 
@@ -59,31 +82,38 @@ namespace Mockbuster.Controllers.Api
 
         // PUT api/movies/1
         [HttpPut]
-        public void UpdateMovie(int id, MovieDto movieDto)
+        [Authorize(Roles = RoleName.CanManageMovies)]
+        public IHttpActionResult UpdateMovie(int id, MovieDto movieDto)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest("One or more form entries are invalid");
 
             var movieInDb = _context.Movies.SingleOrDefault(m => m.Id == id);
 
             if (movieInDb == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
             Mapper.Map(movieDto, movieInDb);
+
             _context.SaveChanges();
+
+            return Ok();
         }
 
         // DELETE api/movies/1
         [HttpDelete]
-        public void DeleteMovie(int id)
+        [Authorize(Roles = RoleName.CanManageMovies)]
+        public IHttpActionResult DeleteMovie(int id)
         {
             var movieInDb = _context.Movies.SingleOrDefault(m => m.Id == id);
 
             if (movieInDb == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
             _context.Movies.Remove(movieInDb);
             _context.SaveChanges();
+
+            return Ok();
         }
     }
 }
