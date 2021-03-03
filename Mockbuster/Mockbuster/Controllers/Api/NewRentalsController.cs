@@ -20,9 +20,9 @@ namespace Mockbuster.Controllers.Api
 
         // Optimistic validation, nonpublic api
         [HttpPost]
-        public IHttpActionResult CreateNewRental(NewRentalDto newRental)
+        public IHttpActionResult CreateNewRentals(NewRentalDto newRental)
         {
-            Customer customerInDb = _context.Customers.Single(
+            var customerInDb = _context.Customers.Single(
                 c => c.Id == newRental.CustomerId);
 
             var movies = _context.Movies.Where(
@@ -31,7 +31,7 @@ namespace Mockbuster.Controllers.Api
             foreach (var movie in movies)
             {
                 if (movie.NumberAvailable <= 0)
-                    return BadRequest("movie is not available:" + movie.Name);
+                    return BadRequest("movie is not available:");
 
                 movie.NumberAvailable--;
 
@@ -51,45 +51,45 @@ namespace Mockbuster.Controllers.Api
         }
 
         // Defensive validation for public api
-        [HttpPost]
-        public IHttpActionResult CreateNewRentalDefensiveValidation(NewRentalDto newRental)
-        {
+        //[HttpPost]
+        //public IHttpActionResult CreateNewRentalDefensiveValidation(NewRentalDto newRental)
+        //{
 
-            if (newRental.MovieIds.Count == 0)
-                return BadRequest("No movie Ids have been given.");
+        //    if (newRental.MovieIds.Count == 0)
+        //        return BadRequest("No movie Ids have been given.");
 
-            Customer customerInDb = _context.Customers.SingleOrDefault(
-                c => c.Id == newRental.CustomerId);
+        //    Customer customerInDb = _context.Customers.SingleOrDefault(
+        //        c => c.Id == newRental.CustomerId);
 
-            if (customerInDb == null)
-                return BadRequest("CustomerId is not valid");
+        //    if (customerInDb == null)
+        //        return BadRequest("CustomerId is not valid");
 
-            var movies = _context.Movies.Where(
-                m => newRental.MovieIds.Contains(m.Id)).ToList();
+        //    var movies = _context.Movies.Where(
+        //        m => newRental.MovieIds.Contains(m.Id)).ToList();
 
-            if (movies.Count != newRental.MovieIds.Count)
-                return BadRequest("One or more MovieIds are not valid");
+        //    if (movies.Count != newRental.MovieIds.Count)
+        //        return BadRequest("One or more MovieIds are not valid");
 
-            foreach (var movie in movies)
-            {
-                if (movie.NumberAvailable == 0)
-                    return BadRequest("movie is not available:" + movie.Name);
+        //    foreach (var movie in movies)
+        //    {
+        //        if (movie.NumberAvailable == 0)
+        //            return BadRequest("movie is not available:" + movie.Name);
 
-                movie.NumberAvailable--;
+        //        movie.NumberAvailable--;
 
-                var rental = new Rental
-                {
-                    Customer = customerInDb,
-                    Movie = movie,
-                    DateRented = DateTime.Now
-                };
+        //        var rental = new Rental
+        //        {
+        //            Customer = customerInDb,
+        //            Movie = movie,
+        //            DateRented = DateTime.Now
+        //        };
 
-                _context.Rentals.Add(rental);
-            }
+        //        _context.Rentals.Add(rental);
+        //    }
 
-            _context.SaveChanges();
+        //    _context.SaveChanges();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
     }
 }
