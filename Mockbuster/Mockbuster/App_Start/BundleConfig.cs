@@ -15,7 +15,8 @@ namespace Mockbuster
                       "~/Scripts/respond.js",
                       "~/Scripts/datatables/jquery.datatables.js",
                       "~/Scripts/datatables/datatables.bootstrap.js",
-                      "~/Scripts/typeahead.bundle.js"
+                      "~/Scripts/typeahead.bundle.js",
+                      "~/Scripts/toastr.js"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -30,6 +31,7 @@ namespace Mockbuster
                       "~/Content/bootstrap-lumen.css",
                       "~/Content/datatables/css/datatables.bootstrap.css",
                       "~/Content/Site.css",
+                      "~/Content/toastr.css",
                       "~/Content/typeahead.css"));
         }
     }
