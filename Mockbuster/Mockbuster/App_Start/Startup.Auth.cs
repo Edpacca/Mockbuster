@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Mockbuster.Models;
+using System.Configuration;
 
 namespace Mockbuster
 {
@@ -55,8 +56,8 @@ namespace Mockbuster
             //   consumerSecret: "");
 
             app.UseFacebookAuthentication(
-               appId: "750817649133675",
-               appSecret: "6a15eab4bbb62f134862de59c7a3db87");
+               appId: ConfigurationManager.AppSettings["FacebookAppId"],
+               appSecret: ConfigurationManager.AppSettings["FacebookAppSecret"]);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
